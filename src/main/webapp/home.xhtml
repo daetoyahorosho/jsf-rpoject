@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Главная страница</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+<h:body>
+    <h:form>
+        <h1>Добро пожаловать, #{authorizeBean.login}</h1>
+
+        <p:button value="На главную" outcome="home.xhtml" />
+        <br/>
+        <p:commandButton value="Выход" action="#{authorizeBean.logout()}" />
+    </h:form>
+</h:body>
+</html>

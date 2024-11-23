@@ -1,0 +1,62 @@
+/* Выравнивание формы по центру */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+/* Контейнер для формы */
+.form-container {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+/* Заголовок формы */
+.form-container h1 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333333;
+}
+
+/* Параграфы для отступов между элементами */
+.form-container p {
+    margin-bottom: 30px;
+}
+
+/* Стили для input элементов */
+.form-container p input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+/* Стили для кнопки */
+.form-container p button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-container p button:hover {
+    background-color: #45a049;
+}
+
+.ui-inputfield {
+    margin: 5px 0 !important;
+}
