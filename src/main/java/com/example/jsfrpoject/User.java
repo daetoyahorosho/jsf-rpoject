@@ -13,7 +13,6 @@ public class User {
         this.role = role;
     }
 
-    // Геттеры и сеттеры
     public String getLogin() {
         return login;
     }

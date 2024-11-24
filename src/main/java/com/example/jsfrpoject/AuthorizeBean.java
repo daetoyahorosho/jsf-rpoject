@@ -13,61 +13,55 @@ public class AuthorizeBean implements Serializable {
 
     private String login;
     private String password;
-    private String selectedRole;
 
     public String getLogin() {
-
         return login;
     }
 
     public void setLogin(String login) {
-
         this.login = login;
     }
 
     public String getPassword() {
-
         return password;
     }
 
     public void setPassword(String password) {
-
         this.password = password;
     }
 
-    public String getSelectedRole() {
-        return selectedRole;
-    }
-
-    public void setSelectedRole(String selectedRole) {
-        this.selectedRole = selectedRole;
-    }
-
+    // Метод для авторизации пользователя
     public String authorize() {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        if ("admin".equals(login) && "123123".equals(password) && "ADMIN".equals(selectedRole)) {
+        // Получаем пользователя из базы данных
+        User user = DbUtils.getUserByLogin(login);
+
+        if (user != null && user.getPassword().equals(password)) {
+            // Если логин и пароль совпадают, устанавливаем роль в сессию
             HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
             session.setAttribute("user", login);
-            session.setAttribute("role", selectedRole);
-            System.out.println("Redirecting to adminHome.xhtml");
-            return "admin/adminHome.xhtml?faces-redirect=true";
-        } else if ("user".equals(login) && "123123".equals(password) && "USER".equals(selectedRole)) {
-            HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-            session.setAttribute("user", login);
-            session.setAttribute("role", selectedRole);
-            System.out.println("Redirecting to Home.xhtml");
-            return "user/home.xhtml?faces-redirect=true";
+            session.setAttribute("role", user.getRole());
+
+            // Переход на соответствующую страницу в зависимости от роли
+            if ("ADMIN".equals(user.getRole())) {
+                System.out.println("Redirecting to adminHome.xhtml");
+                return "/admin/adminHome.xhtml?faces-redirect=true";
+            } else {
+                System.out.println("Redirecting to home.xhtml");
+                return "/user/home.xhtml?faces-redirect=true";
+            }
         } else {
+            // Если логин или пароль неверные
             context.addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Ошибка авторизации",
-                            "Неверный логин, пароль или роль"));
+                            "Неверный логин или пароль"));
             return null;
         }
     }
 
-
+    // Метод для выхода из системы
     public String logout() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
@@ -76,5 +70,4 @@ public class AuthorizeBean implements Serializable {
         }
         return "/index.xhtml?faces-redirect=true";
     }
-
 }

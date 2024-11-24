@@ -11,25 +11,22 @@
     <div class="form-container">
         <h1>Авторизация</h1>
 
-        <!-- Отображение сообщений -->
+        <!-- Отображение сообщений об ошибках -->
         <p:messages id="messages" autoUpdate="true" showDetail="true"/>
 
         <h:form>
             <!-- Поля ввода -->
-            <p:inputText id="login" value="#{authorizeBean.login}" placeholder="Введите логин"/>
+            <p:inputText id="login" value="#{authorizeBean.login}" placeholder="Введите логин" required="true"
+                         requiredMessage="Логин обязателен" autofocus="true" />
             <br />
-            <p:password id="password" value="#{authorizeBean.password}" placeholder="Введите пароль" />
-            <br />
-
-            <!-- Выпадающее меню для выбора роли -->
-            <p:selectOneMenu id="role" value="#{authorizeBean.selectedRole}">
-                <f:selectItem itemLabel="Пользователь" itemValue="USER" />
-                <f:selectItem itemLabel="Администратор" itemValue="ADMIN" />
-            </p:selectOneMenu>
+            <p:password id="password" value="#{authorizeBean.password}" placeholder="Введите пароль" required="true"
+                        requiredMessage="Пароль обязателен" />
             <br />
 
             <!-- Кнопка отправки -->
-            <p:commandButton value="Войти" action="#{authorizeBean.authorize}" update="messages" />
+            <p:commandButton value="Войти" action="#{authorizeBean.authorize}" update="messages"
+                             ajax="true" styleClass="btn btn-primary" />
+
         </h:form>
     </div>
 </h:body>

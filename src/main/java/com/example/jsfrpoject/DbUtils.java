@@ -12,7 +12,6 @@ public class DbUtils {
     private static String password;
 
     static {
-        // Загружаем параметры из properties файла
         Properties properties = new Properties();
         try (InputStream input = DbUtils.class.getClassLoader().getResourceAsStream("db.properties")) {
             if (input == null) {
@@ -25,14 +24,23 @@ public class DbUtils {
             username = properties.getProperty("db.username");
             password = properties.getProperty("db.password");
 
+            System.out.println("Database URL: " + url);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, username, password);
+        try {
+            Class.forName("org.postgresql.Driver");
+            return DriverManager.getConnection(url, username, password);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new SQLException("PostgreSQL Driver not found.", e);
+        }
     }
+
 
     public static User getUserByLogin(String login) {
         String sql = "SELECT * FROM users WHERE login = ?";
