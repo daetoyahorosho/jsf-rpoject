@@ -47,13 +47,13 @@ public class AuthorizeBean implements Serializable {
             session.setAttribute("user", login);
             session.setAttribute("role", selectedRole);
             System.out.println("Redirecting to adminHome.xhtml");
-            return "adminHome.xhtml?faces-redirect=true";
+            return "admin/adminHome.xhtml?faces-redirect=true";
         } else if ("user".equals(login) && "123123".equals(password) && "USER".equals(selectedRole)) {
             HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
             session.setAttribute("user", login);
             session.setAttribute("role", selectedRole);
             System.out.println("Redirecting to Home.xhtml");
-            return "home.xhtml?faces-redirect=true";
+            return "user/home.xhtml?faces-redirect=true";
         } else {
             context.addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -70,7 +70,7 @@ public class AuthorizeBean implements Serializable {
         if (session != null) {
             session.invalidate();
         }
-        return "index.xhtml?faces-redirect=true";
+        return "/index.xhtml?faces-redirect=true";
     }
 
 }

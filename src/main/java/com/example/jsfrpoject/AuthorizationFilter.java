@@ -6,13 +6,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-@WebFilter({"/home.xhtml", "/adminHome.xhtml"})
+@WebFilter({"/user/home.xhtml", "/admin/adminHome.xhtml"})
 public class AuthorizationFilter implements Filter {
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    private static final Map<String, String> roleAccess = new HashMap<>();
+    static {
+        roleAccess.put("ADMIN", "/admin/adminHome.xhtml");
+        roleAccess.put("USER", "/user/home.xhtml");
     }
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {}
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -22,19 +29,22 @@ public class AuthorizationFilter implements Filter {
         HttpSession session = httpRequest.getSession(false);
 
         String requestURI = httpRequest.getRequestURI();
+        String contextPath = httpRequest.getContextPath();
+        String relativePath = requestURI.substring(contextPath.length());
 
         if (session == null || session.getAttribute("user") == null) {
             // Пользователь не авторизован
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.xhtml");
         } else {
-            // Проверяем роль для доступа к adminHome.xhtml
+            // Проверяем роль и доступ
             String role = (String) session.getAttribute("role");
-            if ("/adminHome.xhtml".equals(requestURI) && !"ADMIN".equals(role)) {
-                // Если роль не ADMIN, перенаправляем на страницу отказа в доступе
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/accessDenied.xhtml");
-            } else {
-                // Если авторизован и имеет правильную роль, продолжаем обработку
+
+            if (roleAccess.containsKey(role) && relativePath.equals(roleAccess.get(role))) {
+                // Если роль совпадает с запрашиваемым путем
                 chain.doFilter(request, response);
+            } else {
+                // Если роль не совпадает с запрашиваемым путем
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/accessDenied.xhtml");
             }
         }
     }

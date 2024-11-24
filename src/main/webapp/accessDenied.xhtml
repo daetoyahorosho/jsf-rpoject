@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Доступ запрещён</title>
+    <h:outputStylesheet name="css/style.css"/>
 </h:head>
 <h:body>
+    <h:form>
     <h1>Ошибка доступа</h1>
     <p>У вас нет прав для доступа к этой странице.</p>
-    <h:link value="Вернуться на главную" outcome="index.xhtml" />
+        <p:button value="На главную" outcome="/index.xhtml" />
+    </h:form>
 </h:body>
 </html>

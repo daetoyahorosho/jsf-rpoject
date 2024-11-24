@@ -11,9 +11,9 @@
     <h:form>
         <h1>Добро пожаловать, #{authorizeBean.login}</h1>
 
-        <p:button value="На главную" outcome="home.xhtml" />
+        <p:button value="На главную" outcome="/index.xhtml" />
         <br/>
-        <p:commandButton value="Выход" action="#{authorizeBean.logout()}" />
+        <p:commandButton value="Выход" action="#{authorizeBean.logout}" />
     </h:form>
 </h:body>
 </html>
