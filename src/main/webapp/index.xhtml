@@ -12,15 +12,15 @@
         <h1>Авторизация</h1>
 
         <!-- Отображение сообщений об ошибках -->
-        <p:messages id="messages" autoUpdate="true" showDetail="true"/>
+        <p:messages id="messages" autoUpdate="true" redisplay="false"/>
 
         <h:form>
             <!-- Поля ввода -->
             <p:inputText id="login" value="#{authorizeBean.login}" placeholder="Введите логин" required="true"
-                         requiredMessage="Логин обязателен" autofocus="true" />
+                         requiredMessage="Логин обязателен" autofocus="true" validateClient="true"/>
             <br />
             <p:password id="password" value="#{authorizeBean.password}" placeholder="Введите пароль" required="true"
-                        requiredMessage="Пароль обязателен" />
+                        requiredMessage="Пароль обязателен" validateClient="true"/>
             <br />
 
             <!-- Кнопка отправки -->

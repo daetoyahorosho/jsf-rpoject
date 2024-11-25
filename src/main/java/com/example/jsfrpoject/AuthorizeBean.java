@@ -30,11 +30,12 @@ public class AuthorizeBean implements Serializable {
         this.password = password;
     }
 
-    // Метод для авторизации пользователя
+    /**
+     * Метод проверки данных пользователя
+     * @return
+     */
     public String authorize() {
         FacesContext context = FacesContext.getCurrentInstance();
-
-        // Получаем пользователя из базы данных
         User user = DbUtils.getUserByLogin(login);
 
         if (user != null && user.getPassword().equals(password)) {
@@ -43,7 +44,6 @@ public class AuthorizeBean implements Serializable {
             session.setAttribute("user", login);
             session.setAttribute("role", user.getRole());
 
-            // Переход на соответствующую страницу в зависимости от роли
             if ("ADMIN".equals(user.getRole())) {
                 System.out.println("Redirecting to adminHome.xhtml");
                 return "/admin/adminHome.xhtml?faces-redirect=true";
@@ -52,7 +52,6 @@ public class AuthorizeBean implements Serializable {
                 return "/user/home.xhtml?faces-redirect=true";
             }
         } else {
-            // Если логин или пароль неверные
             context.addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Ошибка авторизации",
@@ -61,7 +60,10 @@ public class AuthorizeBean implements Serializable {
         }
     }
 
-    // Метод для выхода из системы
+    /**
+     * Метод закрытия сессии пользователя
+     * @return
+     */
     public String logout() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(false);

@@ -11,6 +11,9 @@ public class DbUtils {
     private static String username;
     private static String password;
 
+    /**
+     * Блоки для инициализации подключения к БД
+     */
     static {
         Properties properties = new Properties();
         try (InputStream input = DbUtils.class.getClassLoader().getResourceAsStream("db.properties")) {
@@ -19,7 +22,6 @@ public class DbUtils {
             }
             properties.load(input);
 
-            // Инициализируем параметры подключения
             url = properties.getProperty("db.url");
             username = properties.getProperty("db.username");
             password = properties.getProperty("db.password");
@@ -30,7 +32,11 @@ public class DbUtils {
         }
     }
 
-
+    /**
+     *
+     * @return DriverManager.getConnection(url, username, password);
+     * @throws SQLException
+     */
     public static Connection getConnection() throws SQLException {
         try {
             Class.forName("org.postgresql.Driver");
@@ -41,7 +47,11 @@ public class DbUtils {
         }
     }
 
-
+    /**
+     * Метод получения данных пользователя в таблице users
+     * @param login
+     * @return
+     */
     public static User getUserByLogin(String login) {
         String sql = "SELECT * FROM users WHERE login = ?";
         try (Connection conn = getConnection();

@@ -33,17 +33,13 @@ public class AuthorizationFilter implements Filter {
         String relativePath = requestURI.substring(contextPath.length());
 
         if (session == null || session.getAttribute("user") == null) {
-            // Пользователь не авторизован
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.xhtml");
         } else {
-            // Проверяем роль и доступ
             String role = (String) session.getAttribute("role");
 
             if (roleAccess.containsKey(role) && relativePath.equals(roleAccess.get(role))) {
-                // Если роль совпадает с запрашиваемым путем
                 chain.doFilter(request, response);
             } else {
-                // Если роль не совпадает с запрашиваемым путем
                 httpResponse.sendRedirect(httpRequest.getContextPath() + "/accessDenied.xhtml");
             }
         }

@@ -6,7 +6,6 @@ public class User {
     private String password;
     private String role;
 
-    // Конструктор
     public User(String login, String password, String role) {
         this.login = login;
         this.password = password;
