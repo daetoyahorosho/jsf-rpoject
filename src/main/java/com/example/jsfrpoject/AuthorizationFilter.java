@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebFilter({"/user/home.xhtml", "/admin/adminHome.xhtml"})
+@WebFilter({"/user/home.xhtml", "/admin/admin.xhtml"})
 public class AuthorizationFilter implements Filter {
 
     private static final Map<String, String> roleAccess = new HashMap<>();
     static {
-        roleAccess.put("ADMIN", "/admin/adminHome.xhtml");
+        roleAccess.put("ADMIN", "/admin/admin.xhtml");
         roleAccess.put("USER", "/user/home.xhtml");
     }
 

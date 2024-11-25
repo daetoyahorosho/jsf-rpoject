@@ -45,10 +45,10 @@ public class AuthorizeBean implements Serializable {
             session.setAttribute("role", user.getRole());
 
             if ("ADMIN".equals(user.getRole())) {
-                System.out.println("Redirecting to adminHome.xhtml");
-                return "/admin/adminHome.xhtml?faces-redirect=true";
+                System.out.println("Redirecting to admin.xhtml");
+                return "/admin/admin.xhtml?faces-redirect=true";
             } else {
-                System.out.println("Redirecting to home.xhtml");
+                System.out.println("Redirecting to admin.xhtml");
                 return "/user/home.xhtml?faces-redirect=true";
             }
         } else {
