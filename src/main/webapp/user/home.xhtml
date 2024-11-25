@@ -9,11 +9,30 @@
 </h:head>
 <h:body>
     <h:form>
-        <h1>Добро пожаловать, #{authorizeBean.login}</h1>
+        <h1>Расчет коммунальных услуг</h1>
 
-        <p:button value="На главную" outcome="/index.xhtml" />
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Показания Т1:" />
+            <h:inputText value="" />
+
+            <h:outputLabel value="Показания Т2:" />
+            <h:inputText value="" />
+
+            <h:outputLabel value="Показания ХВС:" />
+            <h:inputText value="" />
+
+            <h:outputLabel value="Показания ГВС:" />
+            <h:inputText value="" />
+        </h:panelGrid>
+
         <br/>
-        <p:commandButton value="Выход" action="#{authorizeBean.logout}" />
+        <p:commandButton value="Рассчитать"
+        ajax="true" styleClass="btn btn-primary" />
+
+        <br/>
+        <br/>
+        <h:outputLabel value="Итоговая стоимость: " />
+        <h:outputText value="" />
     </h:form>
 </h:body>
 </html>
